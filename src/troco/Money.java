@@ -8,7 +8,7 @@ public enum Money {
 	CINCO(5),
 	UM(1);
 	
-	public int value;
+	int value;
 	
 	Money(int value) {
 		this.value = value;

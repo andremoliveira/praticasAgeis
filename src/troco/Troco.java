@@ -1,10 +1,13 @@
 package troco;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javafx.util.Pair;
 
 public class Troco {
 
-	public String calculateChange(double paidTotal, double total) throws Exception {
+	public List<List<Integer>> calculateChange(double paidTotal, double total) throws Exception {
 		
 		double change = paidTotal - total;
 		
@@ -16,60 +19,82 @@ public class Troco {
 		
 		double fractionalPart = change - integerPart;
 		
-		ArrayList<Money> notes = this.calculateChangeMinorNotes(integerPart);
-		ArrayList<Coin> coins = this.calculateChangeMinorCoins(fractionalPart);
+		List<Integer> notes = this.calculateChangeMinorNotes(integerPart);
+		List<Integer> coins = this.calculateChangeMinorCoins(fractionalPart);
 		
-		return notes.size() + " notas e " + coins.size() + " moedas";
+		List<List<Integer>> ret = new ArrayList<List<Integer>>();
+		ret.add(notes);
+		ret.add(coins);
+		
+		return ret;
 	}
 	
 	
-	private ArrayList<Money> calculateChangeMinorNotes(int change) {
+	private List<Integer> calculateChangeMinorNotes(int change) {
 		
-		ArrayList<Money> notes = new ArrayList<>();
+		List<Integer> notes = new ArrayList<Integer>();
+		int totalNotes = 0;
 		while(change >= 100){
-			notes.add(Money.CEM);
+			totalNotes++;
 			change -= 100;
 		}
+		notes.add(totalNotes);
+		totalNotes = 0;
 		while(change >= 50){
-			notes.add(Money.CINQ);
+			totalNotes++;
 			change -= 50;
 		}
+		notes.add(totalNotes);
+		totalNotes = 0;
 		while(change >= 10){
-			notes.add(Money.DEZ);
+			totalNotes++;
 			change -= 10;
 		}
+		notes.add(totalNotes);
+		totalNotes = 0;
 		while(change >= 5){
-			notes.add(Money.CINCO);
+			totalNotes++;
 			change -= 5;
 		}
+		notes.add(totalNotes);
+		totalNotes = 0;
 		while(change >= 1){
-			notes.add(Money.UM);
+			totalNotes++;
 			change -= 1;
 		}
+		notes.add(totalNotes);
 		
 		return notes;
 		
 	}
 	
-	private ArrayList<Coin> calculateChangeMinorCoins(double change) {
+	private List<Integer> calculateChangeMinorCoins(double change) {
 		
-		ArrayList<Coin> coins = new ArrayList<>();
+		List<Integer> coins = new ArrayList<Integer>();
+		int totalCoins = 0;
 		while(change >= 0.5){
-			coins.add(Coin.CINQ);
+			totalCoins++;
 			change -= 0.5;
 		}
+		coins.add(totalCoins);
+		totalCoins = 0;
 		while(change >= 0.1){
-			coins.add(Coin.DEZ);
+			totalCoins++;
 			change -= 0.1;
 		}
+		coins.add(totalCoins);
+		totalCoins = 0;
 		while(change >= 0.05){
-			coins.add(Coin.CINCO);
+			totalCoins++;
 			change -= 0.05;
 		}
+		coins.add(totalCoins);
+		totalCoins = 0;
 		while(change >= 0.01){
-			coins.add(Coin.UM);
+			totalCoins++;
 			change -= 0.01;
 		}
+		coins.add(totalCoins);
 	
 		return coins;
 		
