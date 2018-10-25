@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 public class Troco {
 
-	public String calculateChange(double paidTotal, double total) {
+	public String calculateChange(double paidTotal, double total) throws Exception {
 		
 		double change = paidTotal - total;
 		
+		if (change < 0){
+			
+			throw new Exception("error message");
+		}
 		int integerPart = (int)change;
 		
 		double fractionalPart = change - integerPart;
@@ -15,8 +19,7 @@ public class Troco {
 		ArrayList<Money> notes = this.calculateChangeMinorNotes(integerPart);
 		ArrayList<Coin> coins = this.calculateChangeMinorCoins(fractionalPart);
 		
-		Integer cedules = notes.size() + coins.size();
-		return cedules.toString();
+		return notes.size() + " notas e " + coins.size() + " moedas";
 	}
 	
 	
